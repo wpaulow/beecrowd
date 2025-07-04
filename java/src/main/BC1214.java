@@ -17,12 +17,19 @@
  **/
 import java.util.Locale;
 import java.util.Scanner;
+import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 public class BC1214 {
     public static void main(String[] args) {
         Locale.setDefault(Locale.US);
         Scanner sc = new Scanner(System.in);
         int C = sc.nextInt();
+        List<BigDecimal> percentages = new ArrayList<>();
+
         for (int tc = 0; tc < C; tc++) {
             int N = sc.nextInt();
             int[] grades = new int[N];
@@ -31,11 +38,27 @@ public class BC1214 {
                 grades[i] = sc.nextInt();
                 sum += grades[i];
             }
-            double avg = (double) sum / N;
-            long countAbove = java.util.Arrays.stream(grades).filter(g -> g > avg).count();
-            double percent = 100.0 * countAbove / N;
-            System.out.printf("%.3f%n", percent);
+
+            BigDecimal total = new BigDecimal(sum);
+            BigDecimal count = new BigDecimal(N);
+            BigDecimal avg = total.divide(count, 10, RoundingMode.HALF_UP);
+
+            long countAbove = Arrays.stream(grades)
+                .mapToObj(grade -> new BigDecimal(grade))
+                .filter(g -> g.compareTo(avg) > 0)
+                .count();
+
+            BigDecimal above = new BigDecimal(countAbove);
+            BigDecimal percent = above
+                .multiply(new BigDecimal("100"))
+                .divide(count, 5, RoundingMode.HALF_UP)
+                .setScale(3, RoundingMode.HALF_EVEN);
+
+            percentages.add(percent);
         }
+        percentages.stream()
+            .forEach(percent -> System.out.printf("%.3f%%%n", percent));
+
         sc.close();
     }
 }

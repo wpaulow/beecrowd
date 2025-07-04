@@ -21,16 +21,17 @@ import sys
 
 def main():
     C = int(input())
-    data = list(map(int, input().split()))
-    it = iter(data)
     out = []
     for _ in range(C):
-        N = next(it)
-        grades = [next(it) for _ in range(N)]
+        data = input().split()
+        N = int(data[0])
+        grades = list(map(int, data[1:1+N]))
         avg = sum(grades) / N
-        pct = sum(1 for g in grades if g > avg) / N * 100.0
-        out.append(f"{pct:.3f}")
-    sys.stdout.write("\n".join(out))
+        count_above = sum(1 for g in grades if g > avg)
+        pct = count_above / N * 100.0
+        out.append(f"{pct:.3f}%")
+
+    print("\n".join(out))
 
 if __name__ == "__main__":
     main()

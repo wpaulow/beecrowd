@@ -16,32 +16,23 @@
  *       GitHub: @wpaulow
  */
 function run() {
-    var readline = require('readline');
-    var input = [];
-    var rl = readline.createInterface({
-        input: process.stdin,
-        output: process.stdout
-    });
-    rl.question('', function (answer) {
-        var input = answer.trim().split(/\s+/).map(Number);
-        rl.close();
-    });
-    var idx = 0;
-    var C = input[idx++];
-    var results = [];
-    var _loop_1 = function (t) {
-        var N = input[idx++];
-        var grades = input.slice(idx, idx + N);
-        idx += N;
+    var fs = require('fs');
+    var input = fs.readFileSync('/dev/stdin', 'utf8');
+    var lines = input.trim().split('\n');
+    // .shift() para pegar o primeiro elemento e removê-lo do array 'lines'.
+    var C = parseInt(lines.shift());
+    var _loop_1 = function (i) {
+        var lineValues = lines[i].trim().split(/\s+/).map(Number);
+        var N = lineValues[0];
+        var grades = lineValues.slice(1);
         var sum = grades.reduce(function (a, b) { return a + b; }, 0);
         var avg = sum / N;
         var above = grades.filter(function (g) { return g > avg; }).length;
         var pct = (above * 100) / N;
-        results.push(pct.toFixed(3));
+        console.log(pct.toFixed(3) + '%');
     };
-    for (var t = 0; t < C; t++) {
-        _loop_1(t);
+    for (var i = 0; i < C; i++) {
+        _loop_1(i);
     }
-    console.log(results.join('\n'));
 }
 run();

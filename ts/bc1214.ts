@@ -17,35 +17,23 @@
  */
 
 function run(): void {
-  const readline = require('readline');
-  const input = [];
+  const fs = require('fs');
 
-  const rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout
-  });
+  const input = fs.readFileSync('/dev/stdin', 'utf8');
+  const lines = input.trim().split('\n');
 
-  rl.question('', (answer) => {
-    const input = answer.trim().split(/\s+/).map(Number);
-    rl.close();
-  });
+  const C = parseInt(lines.shift());
 
-  let idx = 0;
-  const C = input[idx++];
-  const results: string[] = [];
+  for (let i = 0; i < C; i++) {
+    const lineValues = lines[i].trim().split(/\s+/).map(Number);
 
-  for (let t = 0; t < C; t++) {
-    const N = input[idx++];
-    const grades = input.slice(idx, idx + N);
-    idx += N;
+    const N = lineValues[0];
+    const grades = lineValues.slice(1);
     const sum = grades.reduce((a, b) => a + b, 0);
     const avg = sum / N;
     const above = grades.filter(g => g > avg).length;
     const pct = (above * 100) / N;
-    results.push(pct.toFixed(3));
+    console.log(pct.toFixed(3) + '%');
   }
-
-  console.log(results.join('\n'));
 }
-
 run();

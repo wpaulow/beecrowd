@@ -53,7 +53,7 @@ int main(void) {
     double out[c];
     for(int i = 0; i < c; i++) out[i] = averages();
 
-    for(int i = 0; i < c; i++) printf("%.3lf\n", out[i]);
+    for(int i = 0; i < c; i++) printf("%.3lf%\n", out[i]);
 
     return 0;
 }
