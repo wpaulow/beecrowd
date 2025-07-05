@@ -17,7 +17,7 @@ def main():
                 n = int(n)
                 if(n >= 1 and n <= tickets):
                     count[n] += 1
-                    if (count[n] >= 2):
+                    if (count[n] == 2):
                         reps += 1
 
         out.append(reps)
