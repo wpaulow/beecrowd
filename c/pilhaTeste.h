@@ -4,15 +4,15 @@
 typedef int ItemP;
 
 typedef struct pilha {
-    int max;      // tamanho máximo da pilha
-    int topo;     // posição do topo da pilha
-    ItemP *item;  // array que armazena os elementos da pilha
+    int max;
+    int topo;
+    ItemP *item;
 } *Pilha;
 
 Pilha pilha(int max) {
     Pilha p = (Pilha)malloc(sizeof(Pilha));
     if (p == NULL) {
-        printf("Erro: memoria insuficiente\n"); // ver se isso é necessário
+        printf("Erro: memoria insuficiente\n");
         exit(1);
     }
     p->max = max;
